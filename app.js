@@ -40,17 +40,18 @@ app.post('/generateCoupon', async (req, res) => {
   const { code } = req.body;
   try {
     // Reading image
-    const image = await Jimp.read('img.jpg');
+    const image = await Jimp.read('img.png');
 
     // Defining the text font
-    const font = await Jimp.loadFont(Jimp.FONT_SANS_32_BLACK);
-    image.print(font, 180, 420, code);
+    const font = await Jimp.loadFont('Lato.ttf.fnt');
+    image.print(font, 780, 3210, code);
 
     // Writing image after processing
     await image.writeAsync('image.png');
 
     res.status(200).json({ message: "Coupon Code Generated", success: true });
-  } catch {
+  } catch (err) {
+    console.log(err)
     res.status(500).json({ message: "Something went wrong", success: false });
   }
 
